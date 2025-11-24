@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Office - Todo en uno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0078d4;
+            --dark: #1e1e1e;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; }
+        .hero { 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42175?w=1600') center/cover no-repeat;
+            min-height: 80vh; display: flex; align-items: center; color: white;
+        }
+        .navbar { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .card:hover { transform: translateY(-8px); transition: 0.3s; }
+        footer { background: var(--dark); }
+
+/* Línea de tiempo */
+        .timeline {
+            position: relative; padding: 40px 0;
+        }
+        .timeline::before {
+            content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
+            width: 4px; background: var(--primary); transform: translateX(-50%);
+        }
+        .timeline li {
+            margin: 50px 0; position: relative; width: 45%;
+            background: white; padding: 20px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .timeline li:nth-child(odd) { left: 0; }
+        .timeline li:nth-child(even) { left: 55%; }
+        .timeline li::before {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            background: var(--primary); border-radius: 50%; top: 25px;
+        }
+        .timeline li:nth-child(odd)::before { right: -34px; }
+        .timeline li:nth-child(even)::before { left: -34px; }
+
+/* Juegos */
+        .card-flip { perspective: 1000px; width: 100px; height: 100px; cursor: pointer; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .volteada .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; align-items: center; justify-content: center; border-radius: 10px;
+            font-size: 2rem; border: 2px solid #ddd;
+        }
+        .card-front { background: #0078d4; color: white; }
+        .card-back { background: white; transform: rotateY(180deg); }
+
+/* Crucigrama */
+        .crossword { font-family: monospace; font-size: 1.5rem; text-align: center; }
+        .crossword input { width: 40px; height: 40px; text-align: center; text-transform: uppercase; }
+
+/* Atajos */
+        .shortcut { padding: 15px; background: #e7f3ff; border-radius: 8px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#inicio">
+            <i class="fab fa-microsoft me-2"></i> Microsoft Office
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#historia">Historia</a></li>
+                <li class="nav-item"><a class="nav-link" href="#aplicaciones">Aplicaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tutoriales">Tutoriales</a></li>
+                <li class="nav-item"><a class="nav-link" href="#juegos">Juegos</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="inicio" class="hero text-center">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Microsoft Office</h1>
+        <p class="lead">La suite de productividad más poderosa del mundo</p>
+        <a href="#aplicaciones" class="btn btn-light btn-lg mt-3">Explorar ahora</a>
+    </div>
+</section>
+
+<div class="container my-5">
+
+    <!-- HISTORIA -->
+    <section id="historia" class="my-5 pt-5">
+        <h2 class="text-center mb-5">Historia de Microsoft Office</h2>
+        <ul class="timeline">
+            <li>1989 – Lanzamiento de Office 1.0 (Word, Excel, PowerPoint)</li>
+            <li>1995 – Office 95: primera versión solo para Windows 95</li>
+            <li>2001 – Office XP con activación de producto</li>
+            <li>2007 – Office 2007: nace la interfaz Ribbon</li>
+            <li>2013 – Nace Office 365 (modelo suscripción)</li>
+            <li>2019 – Office 2019 y Microsoft 365</li>
+            <li>2021 – Se renombra oficialmente a Microsoft 365</li>
+            <li>2024-2025 – Integración masiva de IA con Copilot</li>
+        </ul>
+    </section>
+
+    <!-- APLICACIONES -->
+    <section id="aplicaciones" class="my-5">
+        <h2 class="text-center mb-5">Aplicaciones Principales</h2>
+        <div class="row g-4">
+            <div class="col-md-4"><div class="card h-100 text-center"><div class="card-body">
+                <h5 class="text-primary">Word</h5><p>Procesador de textos líder para documentos profesionales.</p>
+            </div></div></div>
+            <div class="col-md-4"><div class="card h-100 text-center"><div class="card-body">
+                <h5 class="text-success">Excel</h5><p>Análisis de datos, gráficos y automatización.</p>
+            </div></div></div>
+            <div class="col-md-4"><div class="card h-100 text-center"><div class="card-body">
+                <h5 class="text-danger">PowerPoint</h5><p>Crea presentaciones impactantes.</p>
+            </div></div></div>
+            <div class="col-md-4"><div class="card h-100 text-center"><div class="card-body">
+                <h5 class="text-warning">Outlook</h5><p>Correo y calendario profesional.</p>
+            </div></div></div>
+            <div class="col-md-4"><div class="card h-100 text-center"><div class="card-body">
+                <h5 class="text-info">OneNote</h5><p>Toma de notas digital ilimitada.</p>
+            </div></div></div>
+            <div class="col-md-4"><div class="card h-100 text-center"><div class="card-body">
+                <h5 class="text-dark">Access</h5><p>Bases de datos de escritorio.</p>
+            </div></div></div>
+        </div>
+    </section>
+
+    <!-- TUTORIALES -->
+    <section id="tutoriales" class="my-5">
+        <h2 class="text-center mb-5">Tutoriales para Principiantes</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h4>Curso COMPLETO de Excel desde cero</h4>
+                <div class="ratio ratio-16x9 mb-4">
+                    <iframe src="https://www.youtube.com/embed/yKWFMgurUnU?list=PLLniqWgyb4HHfkyWNgMWSvTq6RlUGusgN" allowfullscreen></iframe>
+                </div>
+                <h4 class="mt-5">Word para Principiantes</h4>
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/-4ooZlyprmc" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JUEGOS -->
+    <section id="juegos" class="my-5 pt-5">
+        <h2 class="text-center mb-5">Juegos Educativos</h2>
+
+        <!-- 1. Memoria -->
+        <div class="text-center mb-5">
+            <h4>1. Juego de Memoria</h4>
+            <div id="tablero" class="d-inline-flex flex-wrap justify-content-center gap-3"></div>
+            <p class="mt-3">Pares encontrados: <span id="pares">0</span>/8</p>
+        </div>
+
+        <!-- 2. Crucigrama -->
+        <div class="text-center mb-5">
+            <h4>2. Crucigrama Office (mini)</h4>
+            <div class="crossword">
+                <div>1 Horizontal: Hoja de cálculo → <input maxlength="5" id="c1"></div>
+                <div>2 Horizontal: Procesador de textos → <input maxlength="4" id="c2"></div>
+                <div>3 Vertical: Presentaciones → <input maxlength="10" id="c3"></div>
+            </div>
+            <button class="btn btn-success mt-3" onclick="checkCrucigrama()">Comprobar</button>
+            <p id="resultadoCrucigrama"></p>
+        </div>
+
+        <!-- 3. Atajos de teclado -->
+        <div class="text-center">
+            <h4>3. ¿Qué atajo hace esto?</h4>
+            <div id="preguntaAtajo" class="shortcut fs-5"></div>
+            <div class="mt-3">
+                <button class="btn btn-outline-primary m-2" onclick="responderAtajo('Ctrl+C')">Ctrl+C</button>
+                <button class="btn btn-outline-primary m-2" onclick="responderAtajo('Ctrl+V')">Ctrl+V</button>
+                <button class="btn btn-outline-primary m-2" onclick="responderAtajo('Ctrl+Z')">Ctrl+Z</button>
+                <button class="btn btn-outline-primary m-2" onclick="responderAtajo('Ctrl+S')">Ctrl+S</button>
+            </div>
+            <p id="resultadoAtajo" class="mt-3 fw-bold"></p>
+        </div>
+    </section>
+</div>
+
+<footer class="text-white py-4 text-center">
+    <p>© 2025 Microsoft Office Informativo | 
+        <a href="#" class="text-white mx-2" onclick="share('twitter')">Twitter</a> |
+        <a href="#" class="text-white mx-2" onclick="share('facebook')">Facebook</a> |
+        <a href="#" class="text-white mx-2" onclick="share('linkedin')">LinkedIn</a>
+    </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// === JUEGO DE MEMORIA ===
+const apps = [
+    {name:"Word",icon:"Word"}, {name:"Excel",icon:"Excel"}, {name:"PowerPoint",icon:"PowerPoint"},
+    {name:"Outlook",icon:"Outlook"}, {name:"OneNote",icon:"OneNote"}, {name:"Access",icon:"Access"},
+    {name:"Teams",icon:"Teams"}, {name:"Publisher",icon:"Publisher"}
+];
+let cartas = [...apps, ...apps];
+let seleccionadas = [];
+let pares = 0;
+
+function mezclar(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
+function crearTablero(){
+    mezclar(cartas);
+    const t=document.getElementById("tablero"); t.innerHTML="";
+    cartas.forEach((c,i)=>{
+        const div=document.createElement("div");
+        div.className="card-flip";
+        div.innerHTML=`<div class="card-inner"><div class="card-front">?</div><div class="card-back">${c.icon}<br><small>${c.name}</small></div></div>`;
+        div.onclick=()=>voltear(div,c,i);
+        t.appendChild(div);
+    });
+}
+function voltear(el,carta,i){
+    if(el.classList.contains("volteada")||seleccionadas.length===2) return;
+    el.classList.add("volteada");
+    seleccionadas.push({el,carta,i});
+    if(seleccionadas.length===2) setTimeout(comprobarPar,800);
+}
+function comprobarPar(){
+    if(seleccionadas[0].carta.name===seleccionadas[1].carta.name){
+        pares++;
+        document.getElementById("pares").textContent=pares;
+        if(pares===8) alert("¡Felicidades! Completaste el juego de memoria");
+    }else{
+        seleccionadas.forEach(s=>s.el.classList.remove("volteada"));
+    }
+    seleccionadas=[];
+}
+crearTablero();
+
+// === CRUCIGRAMA ===
+function checkCrucigrama(){
+    const r1=document.getElementById("c1").value.toLowerCase()==="excel";
+    const r2=document.getElementById("c2").value.toLowerCase()==="word";
+    const r3=document.getElementById("c3").value.toLowerCase()==="powerpoint";
+    document.getElementById("resultadoCrucigrama").innerHTML = 
+        r1&&r2&&r3 ? "¡Correcto! ¡Eres un crack!" : "Alguna respuesta incorrecta, inténtalo otra vez";
+}
+
+// === ATAJOS DE TECLADO ===
+const preguntas = [
+    {q:"Copiar", r:"Ctrl+C"},
+    {q:"Pegar", r:"Ctrl+V"},
+    {q:"Deshacer", r:"Ctrl+Z"},
+    {q:"Guardar", r:"Ctrl+S"}
+];
+let preguntaActual = 0;
+function nuevaPregunta(){
+    preguntaActual = Math.floor(Math.random()*preguntas.length);
+    document.getElementById("preguntaAtajo").innerHTML = preguntas[preguntaActual].q;
+    document.getElementById("resultadoAtajo").innerHTML = "";
+}
+function responderAtajo(respuesta){
+    const correcta = preguntas[preguntaActual].r===respuesta;
+    document.getElementById("resultadoAtajo").innerHTML = correcta ? "¡Correcto!" : `Incorrecto. Era ${preguntas[preguntaActual].r}`;
+    setTimeout(nuevaPregunta,2000);
+}
+nuevaPregunta();
+
+// Compartir en redes
+function share(red){
+    const url=location.href;
+    const texto="¡Aprende todo sobre Microsoft Office!";
+    if(red==="twitter") window.open(`https://twitter.com/intent/tweet?text=${texto}&url=${url}`);
+    if(red==="facebook") window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
+    if(red==="linkedin") window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
+}
+</script>
+</body>
+</html>
+<script src='https://cdn.jotfor.ms/agent/embedjs/019ab35e040d7a1492ee1467d12e58513391/embed.js'>
+</script>
