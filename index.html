@@ -201,42 +201,42 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // === JUEGO DE MEMORIA ===
-const apps = [
-    {name:"Word",icon:"Word"}, {name:"Excel",icon:"Excel"}, {name:"PowerPoint",icon:"PowerPoint"},
-    {name:"Outlook",icon:"Outlook"}, {name:"OneNote",icon:"OneNote"}, {name:"Access",icon:"Access"},
-    {name:"Teams",icon:"Teams"}, {name:"Publisher",icon:"Publisher"}
-];
-let cartas = [...apps, ...apps];
+const iconos = ["Word","Excel","PowerPoint","Outlook","OneNote","Access"];
+let cartas = [...iconos, ...iconos].sort(() => Math.random() - 0.5);
 let seleccionadas = [];
-let pares = 0;
+let parejas = 0;
 
-function mezclar(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
-function crearTablero(){
-    mezclar(cartas);
-    const t=document.getElementById("tablero"); t.innerHTML="";
-    cartas.forEach((c,i)=>{
-        const div=document.createElement("div");
-        div.className="card-flip";
-        div.innerHTML=`<div class="card-inner"><div class="card-front">?</div><div class="card-back">${c.icon}<br><small>${c.name}</small></div></div>`;
-        div.onclick=()=>voltear(div,c,i);
-        t.appendChild(div);
-    });
-}
-function voltear(el,carta,i){
-    if(el.classList.contains("volteada")||seleccionadas.length===2) return;
-    el.classList.add("volteada");
-    seleccionadas.push({el,carta,i});
-    if(seleccionadas.length===2) setTimeout(comprobarPar,800);
-}
-function comprobarPar(){
-    if(seleccionadas[0].carta.name===seleccionadas[1].carta.name){
-        pares++;
-        document.getElementById("pares").textContent=pares;
-        if(pares===8) alert("¡Felicidades! Completaste el juego de memoria");
-    }else{
-        seleccionadas.forEach(s=>s.el.classList.remove("volteada"));
-    }
-    seleccionadas=[];
+cartas.forEach((app, i) => {
+  const div = document.createElement("div");
+  div.className = "col";
+  div.innerHTML = `
+    <div class="card-flip" onclick="flip(${i})">
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">${app}</div>
+      </div>
+    </div>`;
+  document.getElementById("memoria").appendChild(div);
+});
+
+function flip(i) {
+  const card = document.getElementsByClassName("card-flip")[i];
+  if(card.classList.contains("flipped") || seleccionadas.length === 2) return;
+  card.classList.add("flipped");
+  seleccionadas.push({i, valor: cartas[i], elem: card});
+
+  if(seleccionadas.length === 2) {
+    setTimeout(() => {
+      if(seleccionadas[0].valor === seleccionadas[1].valor) {
+        parejas++;
+        document.getElementById("parejas").textContent = parejas;
+        if(parejas === 6) alert("¡Ganaste el juego de memoria!");
+      } else {
+        seleccionadas.forEach(s => s.elem.classList.remove("flipped"));
+      }
+      seleccionadas = [];
+    }, 800);
+  }
 }
 crearTablero();
 
